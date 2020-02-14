@@ -1,0 +1,134 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# rror
+
+<!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![CRAN status](https://www.r-pkg.org/badges/version/rror)](https://CRAN.R-project.org/package=rror)
+<!-- badges: end -->
+
+`rror` is a package to make using classed conditions in R easier. It contains 
+utilities for creating, raising, and catching conditions including but not 
+limited to messages, warnings, and errors. It is built on top of the base 
+condition handling system, and is fully compatible with it.
+
+## Installation
+
+`rror` is not on CRAN yet, but can be installed from GitHub with 
+
+``` r
+# install.packages("devtools")
+devtools::install_github("alistaire47/rror")
+```
+
+## What are conditions?
+
+_Conditions_ are a formalized way of providing feedback to the user and handling 
+runtime issues. In most languages, conditions include errors and warnings; in R, 
+_messages_ (usually generated with `message()`, equivalent to `warning()` or 
+`stop()`) are also conditions, used for generating diagnostic messages for the 
+user.
+
+R also has infrastructure to create, raise, and handle conditions of your own 
+creation, which may or may not inherit from one of the built-in conditions.
+
+## Why `rror`?
+
+The condition handling system of R is very powerful, but unfortunately most 
+users don't take advantage of its full power, because it is not trivial to 
+understand, a process further hindered by limited documentation. 
+
+`rror` makes it very simple to leverage more of the power of this system—in 
+particular working with classed errors. For instance, if a package maintainer 
+is validating arguments and wants to raise an error for bad input, instead of 
+generating a `simpleError` from `stop()`, e.g.
+
+```{r}
+plus1 <- function(x) {
+    if (!is.numeric(x)) {
+        stop("`x` must be numeric")
+    }
+    
+    x + 1
+}
+
+plus1(2)
+
+tryCatch(
+    plus1("a"),
+    error = function(e) str(e)
+)
+```
+
+the maintainer can raise a classed error, e.g.
+
+```{r}
+plus2 <- function(x){
+    if (!is.numeric(x)) {
+        rror::raise(rror::error_condition("`x` must be numeric", class = "value_error"))
+    }
+    
+    x + 2
+}
+
+plus2(3)
+
+rror::except(
+    plus2("b"),
+    value_error = function(e) str(e)    # we can catch specific error classes!
+)
+```
+
+Common conditions can be predefined and reused.
+
+`rror`'s condition handling function, `except()`, also has some benefits over 
+`tryCatch()`. In particular, because the handlers registered in `tryCatch()` are 
+exiting handlers, it is not very useful for suppressing repeated warnings or 
+messages and continuing:
+
+```{r}
+f1 <- function(i) warning("warning ", i)
+
+tryCatch(
+    {
+        for (i in 1:3) f1(i)
+        2 + 2
+    },
+    warning = function(w) print(w) 
+)
+```
+
+`except()` handles errors with exiting handlers, but non-fatal conditions use 
+local handlers, which lets specific errors be easily suppressed:
+
+```{r}
+f2 <- function(i) {
+    rror::raise(
+        rror::warning_condition(
+            paste("warning", i), 
+            class = "number_warning"
+        )
+    )
+}
+
+rror::except(
+    {
+        for (i in 1:3) f2(i)
+        2 + 2
+    },
+    number_warning = function(w) print(w) 
+)
+```
