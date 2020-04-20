@@ -22,8 +22,8 @@ with it.
 `rror` is not on CRAN yet, but can be installed from GitHub with
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("alistaire47/rror")
+# install.packages("remotes")
+remotes::install_github("alistaire47/rror")
 ```
 
 ## What are conditions?

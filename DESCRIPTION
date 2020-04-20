@@ -2,7 +2,16 @@ Package: rror
 Type: Package
 Title: Easy Classed Conditions and Condition Handling
 Version: 0.1.0
-Authors@R: person("Edward", "Visel", email = "edward.visel@gmail.com", role = c("aut", "cre"))
+Authors@R:
+    c(
+        person(
+            given = "Edward",
+            family = "Visel",
+            role = c("aut", "cre"),
+            email = "edward.visel@gmail.com",
+            comment = c(ORCID = "0000-0002-2811-6254")
+        )
+    )
 Description: Tools for making raising and handling classed conditions (including 
     messages, warnings, and errors) easy.
 Suggests: 
@@ -11,4 +20,4 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
