@@ -18,6 +18,9 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/rror)](https://CRAN.R-project.org/package=rror)
+[![Travis build status](https://travis-ci.org/alistaire47/rror.svg?branch=master)](https://travis-ci.org/alistaire47/rror)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/alistaire47/rror?branch=master&svg=true)](https://ci.appveyor.com/project/alistaire47/rror)
+[![Codecov test coverage](https://codecov.io/gh/alistaire47/rror/branch/master/graph/badge.svg)](https://codecov.io/gh/alistaire47/rror?branch=master)
 <!-- badges: end -->
 
 `rror` is a package to make using classed conditions in R easier. It contains 

@@ -2,3 +2,8 @@
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^README\.Rmd$
+^docs/*$
+^_pkgdown\.yml$
+^\.travis\.yml$
+^appveyor\.yml$
+^codecov\.yml$

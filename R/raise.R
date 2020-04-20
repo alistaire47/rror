@@ -31,12 +31,12 @@ raise <- function(condition){
     ( function(condition) UseMethod("raise") )(condition)
 }
 
-#' @export
+
 raise.default <- function(condition){
     stop("`raise` method for class `", class(condition), "` is not defined")
 }
 
-#' @export
+
 raise.message <- function(condition){
     withRestarts(
         message(condition),
@@ -44,7 +44,7 @@ raise.message <- function(condition){
     )
 }
 
-#' @export
+
 raise.warning <- function(condition){
     withRestarts(
         warning(condition),
@@ -52,7 +52,7 @@ raise.warning <- function(condition){
     )
 }
 
-#' @export
+
 raise.error <- function(condition){
     withRestarts(
         stop(condition),

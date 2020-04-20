@@ -15,7 +15,8 @@ Authors@R:
 Description: Tools for making raising and handling classed conditions (including 
     messages, warnings, and errors) easy.
 Suggests: 
-    testthat
+    testthat,
+    covr
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
